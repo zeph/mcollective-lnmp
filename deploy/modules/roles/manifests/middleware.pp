@@ -4,6 +4,7 @@ class roles::middleware {
   class{"repos": } ->
   class{"redis": } ->
   class{"puppet": } ->
+  class{"nagios": } ->
   class{"puppet::master": } ->
   class{"mcollective": } ->
   Class[$name]

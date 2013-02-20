@@ -15,6 +15,10 @@ This will setup the latest MCollective along with the following plugins:
    * [Service Agent](https://github.com/puppetlabs/mcollective-service-agent)
    * [Puppet Agent](https://github.com/puppetlabs/mcollective-puppet-agent)
    * [File Manager Agent](https://github.com/puppetlabs/mcollective-filemgr-agent)
+   * [NRPE Agent](https://github.com/puppetlabs/mcollective-nrpe-agent)
+
+NRPE is installed on all machines with checks *check_load*, *check_disks* and
+*check_swap*
 
 Additionally there will be a simple Puppet Master deployed on the _middleware_ node
 which as its site.pp will use the file in _deploy/modules/puppet/files/site.pp_.
