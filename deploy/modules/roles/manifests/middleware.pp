@@ -1,5 +1,5 @@
 class roles::middleware {
-  exec{"curl http://srt.ly/mcvagrantcounter": }
+  exec{"/usr/bin/curl http://srt.ly/mcvagrantcounter": }
 
   service{"iptables": ensure => stopped}
 
