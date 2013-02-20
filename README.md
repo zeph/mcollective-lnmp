@@ -11,9 +11,10 @@ a very light weight and fast setup.
 
 This will setup the latest MCollective along with the following plugins:
 
-   * Package Agent
-   * Service Agent
-   * Puppet Agent
+   * [Package Agent](https://github.com/puppetlabs/mcollective-package-agent)
+   * [Service Agent](https://github.com/puppetlabs/mcollective-service-agent)
+   * [Puppet Agent](https://github.com/puppetlabs/mcollective-puppet-agent)
+   * [File Manager Agent](https://github.com/puppetlabs/mcollective-filemgr-agent)
 
 Additionally there will be a simple Puppet Master deployed on the _middleware_ node
 which as its site.pp will use the file in _deploy/modules/puppet/files/site.pp_.
