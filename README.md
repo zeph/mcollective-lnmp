@@ -64,6 +64,26 @@ Using?
 
     Finished processing 2 / 2 hosts in 523.95 ms
 
+Modifying?
+----------
+
+The Puppet modules used to install the boxen are in the _deploy/modules_ directory.
+The _mcollective_ module has _files/lib_ and everything in there will just be recursively
+copied to the nodes.  So if you want to test some plugin you're working on just copy it
+in there and run _vagrant provision_
+
+The EPEL and Puppet Labs repositories are on the machines and all of the plugins mentioned
+in the first section of this document are installed from there.  Some plugins though like
+the Redis ones aren't yet available at Puppet Labs so for now they are deployed from the
+module lib dir.
+
+There is a package repo in _deploy/packages_ with some dependencies and this repo is
+added to all the nodes, so if you drop a new package in there just run _createrepo_ in
+that directory and it would be available to all the machines.
+
+I'd love to see the various things like the Puppet setup done using proper modules from
+the forge so PRs would be appreciated
+
 Contact?
 --------
 R.I.Pienaar / rip@devco.net / @ripienaar / http://devco.net/
