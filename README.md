@@ -9,7 +9,7 @@ simplest possible thing to get a MCollective setup going.
 This setup uses Redis for the middleware, discovery and registration thus providing
 a very light weight and fast setup.
 
-This will setup the latest MCollective along with the following plugins:
+This will setup the latest development MCollective along with the following plugins:
 
    * [Package Agent](https://github.com/puppetlabs/mcollective-package-agent)
    * [Service Agent](https://github.com/puppetlabs/mcollective-service-agent)
@@ -19,6 +19,9 @@ This will setup the latest MCollective along with the following plugins:
 
 NRPE is installed on all machines with checks *check_load*, *check_disks* and
 *check_swap*
+
+The nodes all have a fact called *cluster* which distributed them into a number
+of groups so you can play with the mcollective filters.  See *mco facts cluster*.
 
 Additionally there will be a simple Puppet Master deployed on the _middleware_ node
 which as its site.pp will use the file in _deploy/modules/puppet/files/site.pp_.

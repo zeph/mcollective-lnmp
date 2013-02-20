@@ -6,7 +6,6 @@ class mcollective::install {
            "mcollective-filemgr-agent", "mcollective-filemgr-client",
            "mcollective-nrpe-agent", "mcollective-nrpe-client",
            "gnuplot", "rubygem-redis"]:
-               ensure => latest,
-               require => Class["repos"]
+               ensure => latest
   }
 }
