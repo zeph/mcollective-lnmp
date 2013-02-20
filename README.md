@@ -3,7 +3,11 @@ What?
 
 A quick way to get a mcollective network built for testing or evaluating MCollective.
 
-This consists of a Vagrant file and a few very simple Puppet Modules that does the
+The network will consist of a single node that acts as a middleware server using
+Redis and a configurable amount of nodes under management.  On a 32GB machine I
+have no problem running 26 machines using this repository.
+
+This consists of a Vagrant file and a few **very** simple Puppet Modules that does the
 simplest possible thing to get a MCollective setup going.
 
 This setup uses Redis for the middleware, discovery and registration thus providing
@@ -16,6 +20,9 @@ This will setup the latest development MCollective along with the following plug
    * [Puppet Agent](https://github.com/puppetlabs/mcollective-puppet-agent)
    * [File Manager Agent](https://github.com/puppetlabs/mcollective-filemgr-agent)
    * [NRPE Agent](https://github.com/puppetlabs/mcollective-nrpe-agent)
+   * [Process Agent](https://github.com/puppetlabs/mcollective-process-agent)
+   * [Net Test Agent](https://github.com/puppetlabs/mcollective-nettest-agent)
+   * Request auditing enabled and logging to /var/log/mcollective-audit.log
 
 NRPE is installed on all machines with checks *check_load*, *check_disks* and
 *check_swap*

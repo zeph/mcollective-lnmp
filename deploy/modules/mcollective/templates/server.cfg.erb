@@ -2,7 +2,7 @@ collectives = mcollective
 main_collective = mcollective
 libdir = /usr/libexec/mcollective
 logfile = /var/log/mcollective.log
-loglevel = debug
+loglevel = info
 daemonize = 1
 identity = <%= @fqdn %>
 
@@ -20,3 +20,7 @@ classesfile = /etc/mcollective/classes.txt
 
 registration = redis
 registerinterval = 10
+
+rpcaudit = 1
+rpcauditprovider = logfile
+plugin.rpcaudit.logfile = /var/log/mcollective-audit.log
