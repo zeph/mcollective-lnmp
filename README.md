@@ -22,7 +22,7 @@ This will setup the latest development MCollective along with the following plug
    * [NRPE Agent](https://github.com/puppetlabs/mcollective-nrpe-agent)
    * [Process Agent](https://github.com/puppetlabs/mcollective-process-agent)
    * [Net Test Agent](https://github.com/puppetlabs/mcollective-nettest-agent)
-   * Request auditing enabled and logging to /var/log/mcollective-audit.log
+   * [Request auditing](http://docs.puppetlabs.com/mcollective/simplerpc/auditing.html) enabled and logging to /var/log/mcollective-audit.log
 
 NRPE is installed on all machines with checks *check_load*, *check_disks* and
 *check_swap*
@@ -53,6 +53,8 @@ tastes:
 Using?
 ------
 
+### Verifying it works
+
     $ vagrant ssh middleware
     $ mco ping
     node0.example.net                        time=25.18 ms
@@ -60,6 +62,9 @@ Using?
 
     ---- ping statistics ----
     2 replies max: 26.50 min: 25.18 avg: 25.84
+
+### Using the package application
+
     $ mco package status mcollective
 
      * [ ============================================================> ] 2 / 2
@@ -78,9 +83,13 @@ Using?
 
     Finished processing 2 / 2 hosts in 523.95 ms
 
+There are many more applications installed to help give you a feel for how things work.
+
 Please read the [MCollective CLI Usage](http://docs.puppetlabs.com/mcollective/reference/basic/basic_cli_usage.html)
-documentation to see how it works and what you can do with it.  The guide and the links
-to the modules in the first section of this file will quickly help you explore MCollective.
+documentation to see how to discover what those commands are and how to interact with the
+nodes you built.
+
+Join #mcollective on Freenode if you have any questions
 
 Modifying?
 ----------
