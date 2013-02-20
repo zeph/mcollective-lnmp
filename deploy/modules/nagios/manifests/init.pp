@@ -1,5 +1,5 @@
 class nagios {
-    class{"nrpe": }
+    class{"nrpe": require => Class["repos"]}
 
     package{["nagios-plugins-load", "nagios-plugins-disk", "nagios-plugins-swap"]:
         ensure => present,

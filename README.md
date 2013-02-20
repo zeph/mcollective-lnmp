@@ -68,6 +68,10 @@ Using?
 
     Finished processing 2 / 2 hosts in 523.95 ms
 
+Please read the [MCollective CLI Usage](http://docs.puppetlabs.com/mcollective/reference/basic/basic_cli_usage.html)
+documentation to see how it works and what you can do with it.  The guide and the links
+to the modules in the first section of this file will quickly help you explore MCollective.
+
 Modifying?
 ----------
 
