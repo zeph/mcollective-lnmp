@@ -1,6 +1,4 @@
 class roles::middleware {
-  exec{"/usr/bin/curl http://srt.ly/mcvagrantcounter": }
-
   service{"iptables": ensure => stopped}
 
   class{"repos": } ->
@@ -9,5 +7,6 @@ class roles::middleware {
   class{"nagios": } ->
   class{"puppet::master": } ->
   class{"mcollective": } ->
+  class{"motd": } ->
   Class[$name]
 }
