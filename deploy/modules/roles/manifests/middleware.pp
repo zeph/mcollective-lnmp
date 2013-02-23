@@ -7,6 +7,11 @@ class roles::middleware {
   class{"nagios": } ->
   class{"puppet::master": } ->
   class{"mcollective": } ->
-  class{"motd": } ->
+  class{"motd": } ~>
+
+  exec{"/usr/bin/curl http://srt.ly/mcvagrantcounter":
+    refreshonly => true
+  } ->
+
   Class[$name]
 }
