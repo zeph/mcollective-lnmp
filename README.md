@@ -273,6 +273,8 @@ for rationale and background.
 You can also use this to install, update and upgrade packages on the systems see
 *mco package --help* for more information.
 
+More information about the Service agent: [GitHub](https://github.com/puppetlabs/mcollective-service-agent#readme)
+
 ### Managing Packages
 
 The package and service applications behave almost identical so I won't show full output
@@ -286,6 +288,8 @@ See *mco service --help* for more information.
 
 The *package* and *service* managers use the Puppet provider system to do their work so
 they support any OS Puppet does.
+
+More information about the Package agent: [GitHub](https://github.com/puppetlabs/mcollective-package-agent#readme)
 
 ### Testing network connectivity
 
@@ -318,6 +322,8 @@ some VLAN is down, you can run ask other machines in that cluster to test it's a
 This will ask 20% of the machines in cluster=alfa to see if they can connect to the node
 in question.
 
+More information about the nettest plugin: [GitHub](https://github.com/puppetlabs/mcollective-nettest-agent#readme)
+
 ### Doing monitoring checks
 
 This demo is setup with NRPE based monitoring and we integrated MCollective with NRPE.
@@ -336,6 +342,8 @@ You can thus easily obtain real time monitoring results:
 
 
     Finished processing 11 / 11 hosts in 123.82 ms
+
+More information about the nrpe plugin: [GitHub](https://github.com/puppetlabs/mcollective-nrpe-agent#readme)
 
 ### Network wide *pgrep*
 
@@ -368,6 +376,8 @@ Unix pgrep command:
     Finished processing 2 / 2 hosts in 82.51 ms
 
 The fields shown are configurable - see [the process agent](https://github.com/puppetlabs/mcollective-process-agent)
+
+More information about the process plugin: [GitHub](https://github.com/puppetlabs/mcollective-process-agent#readme)
 
 ### Testing website reachability
 
@@ -445,6 +455,17 @@ And finally you can easily write a small script to perform the same url test act
     printrpcstats
 
 If you put this in a script and ran it you should see familiar output.
+
+### Auditing
+
+After you've run a bunch of commands from the list above take a look at the file _/var/log/mcollective-audit.log_
+which is an audit log of all actions taken on a machine, there's an example below:
+
+    2013-02-25T14:17:30.950082+0100: reqid=5d6f52b519ce5e91b18f46ac7a6d2633: reqtime=1361798250 caller=user=vagrant@middleware.example.net agent=urltest action=perftest data={:url=>"http://www.devco.net/", :process_results=>true}
+    2013-02-25T14:21:01.818629+0100: reqid=9adb441fedc55675855f749b01f67730: reqtime=1361798461 caller=user=vagrant@middleware.example.net agent=service action=restart data={:service=>"nrpe", :process_results=>true}
+    2013-02-25T16:23:47.398020+0100: reqid=fbf93dc4e1605aba9fb7d4e5a6e3b993: reqtime=1361805827 caller=user=vagrant@middleware.example.net agent=nettest action=ping data={:process_results=>true, :fqdn=>"192.168.2.10"}
+
+You can provide your own Audit plugins, more information [here](http://docs.puppetlabs.com/mcollective/simplerpc/auditing.html)
 
 Further Reading?
 ---------------
