@@ -11,7 +11,8 @@ This consists of a Vagrant file and a few **very** simple Puppet Modules that do
 simplest possible thing to get a MCollective setup going.
 
 This setup uses Redis for the middleware, discovery and registration thus providing
-a very light weight and fast setup.
+a very light weight and fast setup.  This is a setup optimized for a demo environment
+in production you're likely to use middleware like ActiveMQ or RabbitMQ.
 
 This will setup the latest development MCollective along with the following plugins:
 
@@ -53,8 +54,8 @@ tastes:
 Using?
 ------
 
-What follows is a whirlwind tour of MCollective where you can run these commands to
-gain a sense of what it is about.
+What follows is a whirlwind tour of MCollective where you can run these commands
+on this Vagrant setup to gain a sense of what it is about.
 
 MCollective is a framework that you can use to solve your own orchestration problems
 with, it provides addressing, networking, Authentication, Authorization and Auditing
@@ -476,6 +477,7 @@ documentation to learn how to get going and what it is about:
   * [Introduction](http://docs.puppetlabs.com/mcollective/)
   * [Terminology](http://docs.puppetlabs.com/mcollective/terminology.html)
   * [Using the CLI tools](http://docs.puppetlabs.com/mcollective/reference/basic/basic_cli_usage.html)
+  * [Security Overview](http://docs.puppetlabs.com/mcollective/security.html)
   * [Getting Started](http://docs.puppetlabs.com/mcollective/reference/basic/gettingstarted.html)
   * [Writing Agents](http://docs.puppetlabs.com/mcollective/simplerpc/agents.html)
   * [Writing Clients](http://docs.puppetlabs.com/mcollective/simplerpc/clients.html)
@@ -502,4 +504,4 @@ the forge so PRs would be appreciated
 
 Contact?
 --------
-R.I.Pienaar / rip@devco.net / @ripienaar / http://devco.net/
+R.I.Pienaar / rip@devco.net / [@ripienaar](http://twitter.com/ripienaar) / http://devco.net/
