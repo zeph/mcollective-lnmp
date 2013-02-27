@@ -25,17 +25,6 @@ This will setup the latest development MCollective along with the following plug
    * [Net Test Agent](https://github.com/puppetlabs/mcollective-nettest-agent)
    * [Request auditing](http://docs.puppetlabs.com/mcollective/simplerpc/auditing.html) enabled and logging to /var/log/mcollective-audit.log
 
-NRPE is installed on all machines with checks *check_load*, *check_disks* and
-*check_swap*
-
-The nodes all have a fact called *cluster* which distributed them into a number
-of groups so you can play with the mcollective filters.  See *mco facts cluster*.
-
-Additionally there will be a simple Puppet Master deployed on the _middleware_ node
-which as its site.pp will use the file in _deploy/modules/puppet/files/site.pp_.
-By default all this does is sleep a random period, enough to be able to test and
-demo the MCollective Puppet Agent
-
 Setup?
 ------
 
@@ -318,7 +307,7 @@ Similarly you can also test if a TCP connection can be made:
 This command is best used with a discovery filter, imagine you suspect a machine in
 some VLAN is down, you can run ask other machines in that cluster to test it's availability
 
-   $ mco nettest ping 192.168.2.10 -W cluster=alfa --limit=20%
+    $ mco nettest ping 192.168.2.10 -W cluster=alfa --limit=20%
 
 This will ask 20% of the machines in cluster=alfa to see if they can connect to the node
 in question.
@@ -343,6 +332,8 @@ You can thus easily obtain real time monitoring results:
 
 
     Finished processing 11 / 11 hosts in 123.82 ms
+
+Checks that are installed on this Vagrant setup are *check_load*, *check_disks* and *check_swap*.
 
 More information about the nrpe plugin: [GitHub](https://github.com/puppetlabs/mcollective-nrpe-agent#readme)
 
