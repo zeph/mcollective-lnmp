@@ -23,7 +23,6 @@ class mcollective::config {
    file{"/usr/libexec/mcollective/mcollective":
       owner => root,
       group => root,
-      mode  => 0444,
       recurse => true,
       source => "puppet:///modules/mcollective/lib"
    }

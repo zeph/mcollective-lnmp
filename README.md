@@ -81,9 +81,9 @@ Just the nodes with the roles::middleware class:
 
     $ mco ping -W roles::middleware
 
-...and the roles::node
+...and the nodes with the roles::node class
 
-    $ mco ping -W roles::middleware
+    $ mco ping -W roles::node
 
 ...and nodes that are middleware nodes with redis installed - matching based on
 regular expressions:
