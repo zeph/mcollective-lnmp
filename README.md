@@ -240,7 +240,7 @@ requested task, you can disable it using the *--np* or *--no-progress* arguments
 This is a key concept to understand in MCollective please see [this blog post](http://www.devco.net/archives/2010/08/28/effective_adhoc_commands_in_clusters.php)
 for rationale and background.
 
-### Managing Services
+### Managing Packages
 
     $ mco package status mcollective
 
@@ -263,14 +263,14 @@ for rationale and background.
 You can also use this to install, update and upgrade packages on the systems see
 *mco package --help* for more information.
 
-More information about the Service agent: [GitHub](https://github.com/puppetlabs/mcollective-service-agent#readme)
+More information about the Package agent: [GitHub](https://github.com/puppetlabs/mcollective-package-agent#readme)
 
-### Managing Packages
+### Managing Services
 
 The package and service applications behave almost identical so I won't show full output
 but you can stop, start, restart and obtain the status of any service.
 
-    $ mco package status mcollective
+    $ mco service status mcollective
     .
     .
 
@@ -279,11 +279,11 @@ See *mco service --help* for more information.
 The *package* and *service* managers use the Puppet provider system to do their work so
 they support any OS Puppet does.
 
-More information about the Package agent: [GitHub](https://github.com/puppetlabs/mcollective-package-agent#readme)
+More information about the Service agent: [GitHub](https://github.com/puppetlabs/mcollective-service-agent#readme)
 
 ### Testing network connectivity
 
-You can easily if machines are able to reach another host using the nettest agent:
+You can easily test if machines are able to reach another host using the nettest agent:
 
     $ mco nettest ping 192.168.2.10
     Do you really want to perform network tests unfiltered? (y/n): y
