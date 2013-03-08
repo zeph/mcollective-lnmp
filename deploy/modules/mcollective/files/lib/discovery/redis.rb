@@ -79,25 +79,28 @@ module MCollective
           prefix = "mcollective::%s" % key_type
           oldest = Time.now.utc.to_i - max_age
 
-          agents = @redis.keys.grep(/^#{prefix}/).map do |key|
+          members = @redis.keys.grep(/^#{prefix}/).map do |key|
             key.match(/^#{prefix}::(.+)$/)[1]
           end
 
+          discovered = []
+
           filter.each do |matcher|
-            matched = agents.grep(regexy_string(matcher))
+            matched = members.grep(regexy_string(matcher))
 
-            found << [] if matched.empty?
-
-            matched.each do |agent|
-              found << @redis.zrange("#{prefix}::#{agent}", 0, oldest)
+            matched.each do |member|
+              discovered.concat @redis.zrange("#{prefix}::#{member}", 0, oldest)
             end
           end
+
+          found << discovered
         end
 
         def collective_hostlist(collective, max_age)
-          oldest = Time.now.utc.to_i - max_age
+          now = Time.now.utc.to_i
+          oldest = now - max_age
 
-          @redis.zrange("mcollective::collective::#{collective}", 0, oldest)
+          @redis.zrangebyscore("mcollective::collective::#{collective}", oldest, now)
         end
 
         def regexy_string(string)
