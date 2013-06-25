@@ -3,7 +3,7 @@
 
 # apart from the middleware node, create
 # this many nodes in addition to the middleware
-INSTANCES=5
+INSTANCES=2
 
 # the nodes will be called middleware.example.net
 # and node0.example.net, you can change this here
