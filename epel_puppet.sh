@@ -13,4 +13,4 @@ sudo rpm -Uvh remi-release-6*.rpm epel-release-6*.rpm
 ls -1 /etc/yum.repos.d/epel* /etc/yum.repos.d/remi.repo
 
 # finally...
-yum install puppet
+yum -y install puppet

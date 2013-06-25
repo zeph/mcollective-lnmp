@@ -25,6 +25,7 @@ Vagrant::Config.run do |config|
     vmconfig.vm.customize ["modifyvm", :id, "--memory", MEMORY]
     vmconfig.vm.box_url = "http://vagrant.rocket.local/centos-64-x64-vbox4210-nocm.box"
 
+    vmconfig.vm.provision :shell, :path => "epel_puppet.sh"
     vmconfig.vm.provision :puppet, :options => ["--pluginsync"], :module_path => "deploy/modules" do |puppet|
       puppet.manifests_path = "deploy"
       puppet.manifest_file = "site.pp"
@@ -39,6 +40,7 @@ Vagrant::Config.run do |config|
       vmconfig.vm.host_name = "node%d.#{DOMAIN}" % i
       vmconfig.vm.box_url = "http://vagrant.rocket.local/centos-64-x64-vbox4210-nocm.box"
 
+      vmconfig.vm.provision :shell, :path => "epel_puppet.sh"
       vmconfig.vm.provision :puppet, :options => ["--pluginsync"], :module_path => "deploy/modules" do |puppet|
         puppet.manifests_path = "deploy"
         puppet.manifest_file = "site.pp"
