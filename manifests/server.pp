@@ -44,7 +44,8 @@ class rabbitmq::server(
   $config='UNSET',
   $env_config='UNSET',
   $erlang_cookie='EOKOWXQREETZSHFNTPEY',
-  $wipe_db_on_cookie_change=false
+  $wipe_db_on_cookie_change=false,
+  $plugins = [],
 ) {
 
   validate_bool($delete_guest_user, $config_stomp)
@@ -145,5 +146,10 @@ class rabbitmq::server(
       provider => 'rabbitmqctl',
     }
   }
+
+  rabbitmq_plugin { $plugins:
+    ensure => present,
+    provider => 'rabbitmqplugins',
+  } 
 
 }
