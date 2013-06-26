@@ -17,7 +17,6 @@ class rabbitmq::repo::rhel (
 
     # wget -O /etc/yum.repos.d/epel-erlang.repo http://repos.fedorapeople.org/repos/peter/erlang/epel-erlang.repo && yum install erlang
     package { "erlang":
-        provider => rpm,
         ensure => installed,
         require => Exec["wget -O /etc/yum.repos.d/epel-erlang.repo ${erepo}"],
     }
