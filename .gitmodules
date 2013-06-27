@@ -1,0 +1,3 @@
+[submodule "deploy/modules/rabbitmq"]
+	path = deploy/modules/rabbitmq
+	url = git@github.com:zeph/puppetlabs-rabbitmq.git
