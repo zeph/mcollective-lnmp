@@ -72,10 +72,19 @@ class rabbitmq::server(
 
   $plugin_dir = "/usr/lib/rabbitmq/lib/rabbitmq_server-${version_real}/plugins"
 
-  package { $package_name:
-    ensure => $pkg_ensure_real,
-    notify => Class['rabbitmq::service'],
-  }
+  case $::osfamily {
+    'RedHat': {
+      class { 'rabbitmq::repo::rhel':
+        version    => $version_real,
+      }
+    }
+    'Debian': {
+      class { 'rabbitmq::repo::apt': }
+    }
+    default: {
+	    # no idea
+    }
+}
 
   file { '/etc/rabbitmq':
     ensure  => directory,
@@ -137,7 +146,32 @@ class rabbitmq::server(
   class { 'rabbitmq::service':
     service_name => $service_name,
     ensure       => $service_ensure,
-  }
+  } 
+
+  rabbitmq_plugin { $plugins:
+    ensure => present,
+    provider => 'rabbitmqplugins',
+    require => Package[$package_name],
+    notify  => Service['rabbitmq-server'],
+  } 
+
+  exec { 'Download rabbitmqadmin':
+    command => "curl http://localhost:1${port}/cli/rabbitmqadmin -o /var/tmp/rabbitmqadmin",
+    path    => '/usr/bin',
+    creates => '/var/tmp/rabbitmqadmin',
+    require => [
+      Rabbitmq_plugin['rabbitmq_management'],
+      Class['rabbitmq::service'],
+    ],
+  } 
+
+  file { '/usr/local/bin/rabbitmqadmin':
+    owner   => 'root',
+    group   => 'root',
+    source  => '/var/tmp/rabbitmqadmin',
+    mode    => '0755',
+    require => Exec['Download rabbitmqadmin'],
+  } 
 
   if $delete_guest_user {
     # delete the default guest user
@@ -147,27 +181,5 @@ class rabbitmq::server(
     }
   }
 
-  rabbitmq_plugin { $plugins:
-    ensure => present,
-    provider => 'rabbitmqplugins',
-  } 
-
-  exec { 'Download rabbitmqadmin':
-    command => "curl http://localhost:1${port}/cli/rabbitmqadmin -o /var/tmp/rabbitmqadmin",
-    path    => '/usr/bin',
-    creates => '/var/tmp/rabbitmqadmin',
-    require => [
-      Class['rabbitmq::service'],
-      Rabbitmq_plugin['rabbitmq_management']
-    ],
-  }
-
-  file { '/usr/local/bin/rabbitmqadmin':
-    owner   => 'root',
-    group   => 'root',
-    source  => '/var/tmp/rabbitmqadmin',
-    mode    => '0755',
-    require => Exec['Download rabbitmqadmin'],
-  }
 
 }
