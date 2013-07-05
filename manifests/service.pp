@@ -22,9 +22,10 @@ class rabbitmq::service(
   if $ensure == 'running' {
     Rabbitmq_plugin<| |>  ->
     Class['rabbitmq::service'] -> Rabbitmq_user<| |>
+    -> Exec['Download rabbitmqadmin']
     Class['rabbitmq::service'] -> Rabbitmq_vhost<| |>
-    Class['rabbitmq::service'] -> Rabbitmq_user_permissions<| |> ->
-    Exec['Download rabbitmqadmin'] -> Rabbitmq_exchange<| |>
+    Class['rabbitmq::service'] -> Rabbitmq_user_permissions<| |>
+    -> Rabbitmq_exchange<| |>
     $ensure_real = 'running'
     $enable_real = true
   } else {
