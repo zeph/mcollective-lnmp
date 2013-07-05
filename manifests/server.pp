@@ -45,7 +45,6 @@ class rabbitmq::server(
   $env_config='UNSET',
   $erlang_cookie='EOKOWXQREETZSHFNTPEY',
   $wipe_db_on_cookie_change=false,
-  $plugins = [],
 ) {
 
   validate_bool($delete_guest_user, $config_stomp)
@@ -140,19 +139,12 @@ class rabbitmq::server(
     owner   => '0',
     group   => '0',
     mode    => '0644',
-    notify  => Class['rabbitmq::service'],
+    notify  => Service['rabbitmq-server'],
   }
 
   class { 'rabbitmq::service':
     service_name => $service_name,
     ensure       => $service_ensure,
-  } 
-
-  rabbitmq_plugin { $plugins:
-    ensure => present,
-    provider => 'rabbitmqplugins',
-    require => Package[$package_name],
-    notify  => Service['rabbitmq-server'],
   } 
 
   exec { 'Download rabbitmqadmin':
@@ -161,7 +153,6 @@ class rabbitmq::server(
     creates => '/var/tmp/rabbitmqadmin',
     require => [
       Rabbitmq_plugin['rabbitmq_management'],
-      Class['rabbitmq::service'],
     ],
   } 
 
