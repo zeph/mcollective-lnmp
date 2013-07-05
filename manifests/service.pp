@@ -21,10 +21,14 @@ class rabbitmq::service(
   validate_re($ensure, '^(running|stopped)$')
   if $ensure == 'running' {
     Rabbitmq_plugin<| |>  ->
+    # we need the plugins before the service starts
     Class['rabbitmq::service'] -> Rabbitmq_user<| |>
-    -> Exec['Download rabbitmqadmin']
     Class['rabbitmq::service'] -> Rabbitmq_vhost<| |>
-    Class['rabbitmq::service'] -> Rabbitmq_user_permissions<| |>
+    Class['rabbitmq::service']
+    -> Rabbitmq_user_permissions<| |>
+    -> Exec['Download rabbitmqadmin']
+    # and we can grab the cli from the webservice
+    # only if it is up and configured... 
     -> Rabbitmq_exchange<| |>
     $ensure_real = 'running'
     $enable_real = true
