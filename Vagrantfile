@@ -1,6 +1,13 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
+# as listed at http://www.vagrantbox.es/
+TEMPLATE="centos-64-x64-vbox4210-nocm"
+T_MIRROR="http://puppet-vagrant-boxes.puppetlabs.com/"+TEMPLATE+".box"
+# local override
+TEMPLATE="ubuntu_precise64"
+T_MIRROR="http://vagrant.rocket.local/"+TEMPLATE+".box"
+
 # apart from the middleware node, create
 # this many nodes in addition to the middleware
 INSTANCES=0
@@ -20,11 +27,11 @@ SUBNET="192.168.2"
 
 Vagrant::Config.run do |config|
   config.vm.define :middleware do |vmconfig|
-    vmconfig.vm.box = "centos-64-x64-vbox4210-nocm"
+    vmconfig.vm.box = TEMPLATE
     vmconfig.vm.network :hostonly, "#{SUBNET}.10"
     vmconfig.vm.host_name = "middleware.#{DOMAIN}"
     vmconfig.vm.customize ["modifyvm", :id, "--memory", MEMORY, "--cpus", 4]
-    vmconfig.vm.box_url = "http://vagrant.rocket.local/centos-64-x64-vbox4210-nocm.box"
+    vmconfig.vm.box_url = T_MIRROR
 
     vmconfig.vm.provision :shell, :path => "puppet_rpm.sh"
     vmconfig.vm.provision :puppet, :options => ["--pluginsync"], :module_path => "deploy/modules" do |puppet|
@@ -35,11 +42,11 @@ Vagrant::Config.run do |config|
 
   INSTANCES.times do |i|
     config.vm.define "node#{i}".to_sym do |vmconfig|
-      vmconfig.vm.box = "centos-64-x64-vbox4210-nocm"
+      vmconfig.vm.box = TEMPLATE
       vmconfig.vm.network :hostonly, "#{SUBNET}.%d" % (10 + i + 1)
       vmconfig.vm.customize ["modifyvm", :id, "--memory", N_MEMORY]
       vmconfig.vm.host_name = "node%d.#{DOMAIN}" % i
-      vmconfig.vm.box_url = "http://vagrant.rocket.local/centos-64-x64-vbox4210-nocm.box"
+      vmconfig.vm.box_url = T_MIRROR
 
       vmconfig.vm.provision :shell, :path => "puppet_rpm.sh"
       vmconfig.vm.provision :puppet, :options => ["--pluginsync"], :module_path => "deploy/modules" do |puppet|
