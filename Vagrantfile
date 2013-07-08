@@ -3,7 +3,7 @@
 
 # apart from the middleware node, create
 # this many nodes in addition to the middleware
-INSTANCES=2
+INSTANCES=0
 
 # the nodes will be called middleware.example.net
 # and node0.example.net, you can change this here
@@ -11,7 +11,8 @@ DOMAIN="example.net"
 
 # these nodes do not need a lot of RAM, 384 is
 # is enough but you can tweak that here
-MEMORY=384
+MEMORY=1024
+N_MEMORY=384
 
 # the instances is a hostonly network, this will
 # be the prefix to the subnet they use
@@ -22,7 +23,7 @@ Vagrant::Config.run do |config|
     vmconfig.vm.box = "centos-64-x64-vbox4210-nocm"
     vmconfig.vm.network :hostonly, "#{SUBNET}.10"
     vmconfig.vm.host_name = "middleware.#{DOMAIN}"
-    vmconfig.vm.customize ["modifyvm", :id, "--memory", MEMORY]
+    vmconfig.vm.customize ["modifyvm", :id, "--memory", MEMORY, "--cpus", 4]
     vmconfig.vm.box_url = "http://vagrant.rocket.local/centos-64-x64-vbox4210-nocm.box"
 
     vmconfig.vm.provision :shell, :path => "puppet_rpm.sh"
@@ -36,7 +37,7 @@ Vagrant::Config.run do |config|
     config.vm.define "node#{i}".to_sym do |vmconfig|
       vmconfig.vm.box = "centos-64-x64-vbox4210-nocm"
       vmconfig.vm.network :hostonly, "#{SUBNET}.%d" % (10 + i + 1)
-      vmconfig.vm.customize ["modifyvm", :id, "--memory", MEMORY]
+      vmconfig.vm.customize ["modifyvm", :id, "--memory", N_MEMORY]
       vmconfig.vm.host_name = "node%d.#{DOMAIN}" % i
       vmconfig.vm.box_url = "http://vagrant.rocket.local/centos-64-x64-vbox4210-nocm.box"
 
