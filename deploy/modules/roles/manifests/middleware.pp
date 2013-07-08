@@ -46,45 +46,4 @@ class roles::middleware {
     user => 'mcollective',
     password => 'changeme',
   } 
-
-  ### Install php 5.4 ppa.
-  ##class { 'nginxphp::ppa': }
-  
-  ### Initiate the module base requirements.
-  include nginxphp
-  
-  ### Install php-fpm with the modules you desire.
-  class { 'nginxphp::php':
-    php_packages => [
-      "php5-intl",
-      "php5-curl",
-      "php5-gd",
-      "php5-xcache",
-      "php5-mcrypt",
-      "php5-xmlrpc",
-      "php5-xsl"
-    ],
-    withppa      => true
-  }
-  
-  ### Install Nginx
-  include nginxphp::nginx
-  
-  ### Install PHP developement tools.
-  include nginxphp::phpdev
-  
-  ### Configure FPM Pool
-  nginxphp::fpmconfig { 'bob':
-    php_devmode   => true,
-    fpm_user      => 'www-data',
-    fpm_group     => 'www-data',
-    fpm_allowed_clients => ''
-  }
-  
-  ### Configure Nginx site
-  nginxphp::nginx_addphpconfig { 'cmantix.dev.local':
-    website_root       => "/var/www/",
-    default_controller => "index.php",
-    require => Nginxphp::Fpmconfig['bob']
-  }
 }
