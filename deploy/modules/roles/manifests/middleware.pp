@@ -14,7 +14,7 @@ class roles::middleware {
     config_stomp => true,
   } 
 
-  $plugins  = ['rabbitmq_stomp', 'rabbitmq_management']
+  $plugins  = ['rabbitmq_stomp']
 
   rabbitmq_plugin { $plugins:
     ensure => present,
