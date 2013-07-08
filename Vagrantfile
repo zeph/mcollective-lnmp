@@ -36,7 +36,7 @@ Vagrant::Config.run do |config|
     vmconfig.vm.customize ["modifyvm", :id, "--memory", MEMORY, "--cpus", 4]
     vmconfig.vm.box_url = T_MIRROR
 
-    vmconfig.vm.provision :shell, :path => "puppet_rpm.sh"
+    vmconfig.vm.provision :shell, :path => "puppet.sh"
     vmconfig.vm.provision :puppet, :options => ["--pluginsync"], :module_path => "deploy/modules" do |puppet|
       puppet.manifests_path = "deploy"
       puppet.manifest_file = "site.pp"
@@ -51,7 +51,7 @@ Vagrant::Config.run do |config|
       vmconfig.vm.host_name = "node%d.#{DOMAIN}" % i
       vmconfig.vm.box_url = T_MIRROR
 
-      vmconfig.vm.provision :shell, :path => "puppet_rpm.sh"
+      vmconfig.vm.provision :shell, :path => "puppet.sh"
       vmconfig.vm.provision :puppet, :options => ["--pluginsync"], :module_path => "deploy/modules" do |puppet|
         puppet.manifests_path = "deploy"
         puppet.manifest_file = "site.pp"
