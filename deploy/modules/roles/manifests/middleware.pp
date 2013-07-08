@@ -48,7 +48,7 @@ class roles::middleware {
   } 
 
   ### Install php 5.4 ppa.
-  class { 'nginxphp::ppa': }
+  ##class { 'nginxphp::ppa': }
   
   ### Initiate the module base requirements.
   include nginxphp
