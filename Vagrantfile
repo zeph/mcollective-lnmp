@@ -2,10 +2,13 @@
 # vi: set ft=ruby :
 
 # as listed at http://www.vagrantbox.es/
-TEMPLATE="centos-64-x64-vbox4210-nocm"
-T_MIRROR="http://puppet-vagrant-boxes.puppetlabs.com/"+TEMPLATE+".box"
+#
+##TEMPLATE="centos-64-x64-vbox4210-nocm"
+##T_MIRROR="http://puppet-vagrant-boxes.puppetlabs.com/"+TEMPLATE+".box"
+TEMPLATE="precise64-vanilla"
+##T_MIRROR="https://dl.dropboxusercontent.com/u/165709740/boxes/"+TEMPLATE+".box"
+
 # local override
-TEMPLATE="ubuntu_precise64"
 T_MIRROR="http://vagrant.rocket.local/"+TEMPLATE+".box"
 
 # apart from the middleware node, create
