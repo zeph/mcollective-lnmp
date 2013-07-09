@@ -5,7 +5,7 @@ class mcollective::install {
       before => Package['mcollective'],
     }
   }
-  package{["mcollective", "gnuplot","rake", "ruby-rspec", "ruby-mocha"]:
+  package{["mcollective", "mcollective-client", "gnuplot","rake", "ruby-rspec", "ruby-mocha"]:
       ensure => latest
   }
 
