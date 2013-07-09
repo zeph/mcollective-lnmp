@@ -4,9 +4,17 @@ class mcollective::install {
       ensure => latest,
       before => Package['mcollective'],
     }
-  }
-  package{["mcollective", "mcollective-client", "gnuplot","rake", "ruby-rspec", "ruby-mocha"]:
+    package{["rake", "ruby-rspec", "ruby-mocha"]:
       ensure => latest
+    }
+  } else {
+    package{["rubygem-rake", "rubygem-rspec", "rubygem-mocha"]:
+      ensure => latest
+    }
+  }
+
+  package{["mcollective", "mcollective-client", "gnuplot"]:
+    ensure => latest
   }
 
   # FIXME :: I shall actually read $target from mcollective::plugin_config

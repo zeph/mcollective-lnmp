@@ -16,8 +16,9 @@ else
 	rpm -qi puppetlabs-release 2>&1> /dev/null || \
 	rpm -ivh http://yum.puppetlabs.com/el/6/products/i386/puppetlabs-release-6-7.noarch.rpm && \
 		yum -y install puppet
-	wget http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm && \
-		wget http://rpms.famillecollet.com/enterprise/remi-release-6.rpm && \
-		rpm -Uvh remi-release-6*.rpm epel-release-6*.rpm && \
+	rpm -qi epel-release 2>&1> /dev/null || \
+	    rpm -ivh http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
+	rpm -qi remi-release 2>&1> /dev/null || \
+		rpm -ivh http://rpms.famillecollet.com/enterprise/remi-release-6.rpm && \
 		ls -1 /etc/yum.repos.d/epel* /etc/yum.repos.d/remi.repo
 fi

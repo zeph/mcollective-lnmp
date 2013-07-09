@@ -15,7 +15,7 @@ class rabbitmq::repo::rhel (
         ensure => installed,
 	    notify => Class['rabbitmq::service'],
         source => "http://www.rabbitmq.com/releases/rabbitmq-server/v${version}/rabbitmq-server-${version}-${relversion}.noarch.rpm",
-        require => [Exec["rpm --import ${key}"], Package["erlang"]],
+        require => Exec["rpm --import ${key}"],
     }
 
     # FIXME for Erlang we need EPEL repositories
