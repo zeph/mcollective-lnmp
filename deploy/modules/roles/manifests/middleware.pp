@@ -1,12 +1,9 @@
 class roles::middleware {
   service{"iptables": ensure => stopped}
 
-  class{"repos": } ->
   class{"puppet": } ->
-  class{"nagios": } ->
   class{"puppet::master": } ->
   class{"mcollective": } ->
-  class{"motd": } ->
   Class[$name]
 
   class{'rabbitmq::server':
