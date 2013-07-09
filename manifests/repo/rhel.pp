@@ -18,15 +18,7 @@ class rabbitmq::repo::rhel (
         require => [Exec["rpm --import ${key}"], Package["erlang"]],
     }
 
-    # wget -O /etc/yum.repos.d/epel-erlang.repo http://repos.fedorapeople.org/repos/peter/erlang/epel-erlang.repo && yum install erlang
-    package { "erlang":
-        ensure => installed,
-        require => Exec["wget -O /etc/yum.repos.d/epel-erlang.repo ${erepo}"],
-    }
-
-    exec { "wget -O /etc/yum.repos.d/epel-erlang.repo ${erepo}":
-        path => ["/bin","/usr/bin","/sbin","/usr/sbin"],
-    }
-
+    # FIXME for Erlang we need EPEL repositories
+    # http://www.rackspace.com/knowledge_center/article/installing-rhel-epel-repo-on-centos-5x-or-6x
 }
 
