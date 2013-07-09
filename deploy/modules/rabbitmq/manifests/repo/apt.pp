@@ -3,10 +3,14 @@
 #   puppetlabs-apt
 #   puppetlabs-stdlib
 class rabbitmq::repo::apt(
+  $package_name = 'rabbitmq-server',
   $pin = undef
 ) {
 
-  Class['rabbitmq::repo::apt'] -> Package<| title == 'rabbitmq-server' |>
+
+  package { $package_name: 
+    ensure => installed, 
+  }
 
   apt::source { 'rabbitmq':
     location    => 'http://www.rabbitmq.com/debian/',
