@@ -13,7 +13,7 @@ class rabbitmq::repo::rhel (
     package { $package_name:
         provider => rpm,
         ensure => installed,
-	notify => Class['rabbitmq::service'],
+	    notify => Class['rabbitmq::service'],
         source => "http://www.rabbitmq.com/releases/rabbitmq-server/v${version}/rabbitmq-server-${version}-${relversion}.noarch.rpm",
         require => [Exec["rpm --import ${key}"], Package["erlang"]],
     }
