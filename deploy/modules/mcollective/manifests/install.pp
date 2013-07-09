@@ -11,6 +11,7 @@ class mcollective::install {
 
   # FIXME :: I shall actually read $target from mcollective::plugin_config
   file { "/etc/mcollective/plugin.d":
-    ensure => 'directory'
+    ensure => 'directory',
+    require => Package['mcollective'],
   }
 }

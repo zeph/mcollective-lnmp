@@ -24,7 +24,20 @@ define mcollective::plugin (
   }
 
   if $::osfamily == 'Debian' {
-    package {"mcollective-plugins-${name}": }
+    case $name {
+      'puppet': {
+        $debian_packages = ["mcollective-plugins-puppetd", "mcollective-plugins-puppetca"]
+      }
+      # "apt-cache search mcollective-plugins" doesn't give me alternatives for these:
+      'integration': {$debian_packages = []}
+      'urltest': {$debian_packages = []}
+
+      default: {
+        $debian_packages = "mcollective-plugins-${name}"
+      }
+    }
+
+    package {$debian_packages: }
 
   } else {
     package{$common_packages: }
