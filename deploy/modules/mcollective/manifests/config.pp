@@ -1,8 +1,8 @@
 class mcollective::config {
   if $::osfamily == 'Debian' {
-    $mcollective_libdir = '/usr/share/mcollective/plugins/mcollective'
+    $mcollective_libdir = '/usr/share/mcollective/plugins'
   } else {
-    $mcollective_libdir = '/usr/libexec/mcollective/mcollective'
+    $mcollective_libdir = '/usr/libexec/mcollective'
   }
 
   file {"/etc/mcollective/server.cfg":
@@ -26,7 +26,7 @@ class mcollective::config {
     source => "puppet:///modules/mcollective/inventory.mc"
   }
 
-  file {$mcollective_libdir:
+  file {"${mcollective_libdir}/mcollective":
     owner => root,
     group => root,
     recurse => true,
