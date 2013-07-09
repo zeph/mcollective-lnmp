@@ -1,7 +1,11 @@
 class mcollective::install {
-  package{["mcollective", "mcollective-client", "mcollective-common",
-           "gnuplot", "rubygem-formatr", "rubygem-rake",
-           "rubygem-rspec", "rubygem-mocha", "rubygem-mcollective-test"]:
+  if $::osfamily == 'Debian' {
+    package {'ruby-stomp':
+      ensure => latest,
+      before => Package['mcollective'],
+    }
+  }
+  package{["mcollective", "gnuplot","rake", "ruby-rspec", "ruby-mocha"]:
       ensure => latest
   }
 }
