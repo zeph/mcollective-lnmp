@@ -8,4 +8,9 @@ class mcollective::install {
   package{["mcollective", "gnuplot","rake", "ruby-rspec", "ruby-mocha"]:
       ensure => latest
   }
+
+  # FIXME :: I shall actually read $target from mcollective::plugin_config
+  file { "/etc/mcollective/plugin.d":
+    ensure => 'directory'
+  }
 }
