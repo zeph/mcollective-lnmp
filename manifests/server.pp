@@ -77,16 +77,15 @@ class rabbitmq::server(
   $plugin_dir = "/usr/lib/rabbitmq/lib/rabbitmq_server-${version_real}/plugins"
 
   case $::osfamily {
-    'RedHat': {
+    'Debian': {
+      class { 'rabbitmq::repo::apt': }
+      $web_port = "5${port}"
+    }
+    default: {
       class { 'rabbitmq::repo::rhel':
         version    => $version_real,
       }
-    }
-    'Debian': {
-      class { 'rabbitmq::repo::apt': }
-    }
-    default: {
-	    # no idea
+      $web_port = "1${port}"
     }
   }
 
@@ -165,17 +164,21 @@ class rabbitmq::server(
   rabbitmq_plugin { 'rabbitmq_management':
     ensure => present,
     provider => 'rabbitmqplugins',
+    notify => Service['rabbitmq-server'],
   }
 
   exec { 'Download rabbitmqadmin':
-    command => "curl http://${default_user}:${default_pass}@localhost:1${port}/cli/rabbitmqadmin -o /var/tmp/rabbitmqadmin",
+    command => "curl http://${default_user}:${default_pass}@localhost:${web_port}/cli/rabbitmqadmin -o /var/tmp/rabbitmqadmin",
     creates => '/var/tmp/rabbitmqadmin',
     path    => '/usr/bin',
     require => [
       Class['rabbitmq::service'],
-      Rabbitmq_plugin['rabbitmq_management']
+      Rabbitmq_plugin['rabbitmq_management'],
+      Package['curl'],
     ],
   }
+
+  package {'curl': ensure => 'installed'}
 
   file { '/usr/local/bin/rabbitmqadmin':
     owner   => 'root',
