@@ -20,7 +20,7 @@ define mcollective::plugin (
   Package {
     ensure => $ensure,
     require => Class["mcollective::install"],
-    notify => Class["mcollective::service"]
+    notify => Class["mcollective::service"],
   }
 
   if $::osfamily == 'Debian' {

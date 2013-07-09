@@ -1,4 +1,6 @@
 class mcollective {
+  Class["mcollective::config"] -> Mcollective::Plugin<| |>
+
   class{"mcollective::install": } ->
   class{"mcollective::config": } ~>
   class{"mcollective::service": } ->
