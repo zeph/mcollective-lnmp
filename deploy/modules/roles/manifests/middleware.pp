@@ -1,5 +1,7 @@
 class roles::middleware {
-  service{"iptables": ensure => stopped}
+  if $::osfamily != 'Debian' {
+    service{"iptables": ensure => stopped}
+  }
 
   class{"puppet": } ->
   class{"puppet::master": } ->

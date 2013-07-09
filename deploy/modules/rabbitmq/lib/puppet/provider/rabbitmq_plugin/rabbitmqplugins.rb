@@ -1,7 +1,8 @@
 Puppet::Type.type(:rabbitmq_plugin).provide(:rabbitmqplugins) do
 
-  has_command(:rabbitmqplugins, 'rabbitmq-plugins') do
-     environment :HOME => "/tmp"
+  # FIXME hardcoding Ubuntu/Debian path of the cli... needs if statement
+  has_command(:rabbitmqplugins, '/usr/lib/rabbitmq/bin/rabbitmq-plugins') do
+    environment :HOME => "/tmp"
   end
   defaultfor :feature => :posix
 
