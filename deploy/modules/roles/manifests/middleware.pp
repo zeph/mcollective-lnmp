@@ -64,9 +64,30 @@ class roles::middleware {
   }
 
   class { 'nginx': }
+  nginx::resource::upstream { 'vagrant_local':
+    ensure  => present,
+    members => [
+      'localhost:9001',
+    ],
+  }
+
+  nginx::resource::location { "vagrant_local":
+    location => '~ \.php$',
+    vhost => "vagrant.local",
+    proxy => 'http://127.0.0.1:9001',
+  }
+
   nginx::resource::vhost { 'vagrant.local':
-    ensure   => present,
+    ensure => present,
     www_root => '/vagrant',
+  }
+
+  include php::fpm::daemon
+  php::fpm::conf { 'www':
+    listen  => '127.0.0.1:9001',
+    user    => 'www-data',
+    # For the user to exist
+    require => Package['nginx'],
   }
 
 }
