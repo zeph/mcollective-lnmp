@@ -62,4 +62,11 @@ class roles::middleware {
     'suhosin', 'svn', 'sybase', 'tokyo-tyrant', 'uuid', 'xcache',
     'xdebug',]:
   }
+
+  class { 'nginx': }
+  nginx::resource::vhost { 'vagrant.local':
+    ensure   => present,
+    www_root => '/vagrant',
+  }
+
 }
