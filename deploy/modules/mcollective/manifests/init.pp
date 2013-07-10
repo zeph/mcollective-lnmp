@@ -10,11 +10,14 @@ class mcollective {
   class{"mcollective::agent::service": }
   class{"mcollective::agent::puppet": }
   class{"mcollective::agent::filemgr": }
-  class{"mcollective::agent::process": }
   class{"mcollective::agent::nettest": }
-  class{"mcollective::agent::integration": }
   class{"mcollective::agent::nrpe": conf_dir => "/etc/nrpe.d"}
-  class{"mcollective::agent::urltest": syslocation => $hostname}
+
+  # this set of packages was available only in the hardcoded set
+  # (the original author, of this puppet module, provided them)
+  #class{"mcollective::agent::process": }
+  #class{"mcollective::agent::integration": }
+  #class{"mcollective::agent::urltest": syslocation => $hostname}
 
   Class["mcollective::install"] ~> Class["mcollective::service"]
 }
