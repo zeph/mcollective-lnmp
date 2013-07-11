@@ -64,17 +64,11 @@ class roles::middleware {
   }
 
   class { 'nginx': }
-  nginx::resource::upstream { 'vagrant_local':
-    ensure  => present,
-    members => [
-      'localhost:9001',
-    ],
-  }
 
   nginx::resource::location { "vagrant_local":
     location => '~ \.php$',
     vhost => "vagrant.local",
-    proxy => 'http://127.0.0.1:9001',
+    fastcgi => '127.0.0.1:9001',
   }
 
   nginx::resource::vhost { 'vagrant.local':
