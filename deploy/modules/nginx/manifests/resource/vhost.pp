@@ -56,7 +56,7 @@ define nginx::resource::vhost(
   $proxy_read_timeout     = $nginx::params::nx_proxy_read_timeout,
   $index_files            = ['index.html', 'index.htm', 'index.php'],
   $server_name            = [$name],
-  $www_root               = undef,
+  $www_root, # shall fail if not present
   $rewrite_www_to_non_www = false,
   $location_cfg_prepend   = undef,
   $location_cfg_append    = undef,
@@ -101,6 +101,7 @@ define nginx::resource::vhost(
 
   # Create the default location reference for the vHost
   nginx::resource::location {"${name}-default":
+    www_root             => $www_root,
     ensure               => $ensure,
     vhost                => $name,
     ssl                  => $ssl,
@@ -109,7 +110,6 @@ define nginx::resource::vhost(
     proxy                => $proxy,
     proxy_read_timeout   => $proxy_read_timeout,
     try_files            => $try_files,
-    www_root             => $www_root,
     notify               => Class['nginx::service'],
   }
 

@@ -56,7 +56,7 @@ define nginx::resource::location(
   $fastcgi              = undef,
   $proxy_read_timeout   = $nginx::params::nx_proxy_read_timeout,
   $ssl                  = false,
-  $ssl_only		= false,
+  $ssl_only		        = false,
   $location_alias       = undef,
   $option               = undef,
   $stub_status          = undef,
@@ -95,8 +95,17 @@ define nginx::resource::location(
   if ($vhost == undef) {
     fail('Cannot create a location reference without attaching to a virtual host')
   }
-  if (($www_root == undef) and ($fastcgi == undef) and
-  ($proxy == undef) and ($location_alias == undef) and ($stub_status == undef) ) {
+
+  notice($www_root)
+  notice($fastcgi)
+  notice($proxy)
+  notice($location_alias)
+  notice($stub_status)
+  if (($www_root == undef)
+  and ($fastcgi == undef)
+  and ($proxy == undef)
+  and ($location_alias == undef)
+  and ($stub_status == undef)) {
     fail('Cannot create a location reference without a www_root, proxy. fastcgi, location_alias or stub_status defined')
   }
 
