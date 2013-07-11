@@ -53,6 +53,7 @@ define nginx::resource::location(
   $www_root             = undef,
   $index_files          = ['index.html', 'index.htm', 'index.php'],
   $proxy                = undef,
+  $fastcgi              = undef,
   $proxy_read_timeout   = $nginx::params::nx_proxy_read_timeout,
   $ssl                  = false,
   $ssl_only		= false,
@@ -77,9 +78,11 @@ define nginx::resource::location(
     default  => file,
   }
 
-  # Use proxy template if $proxy is defined, otherwise use directory template.
+  # Use proxy template if $proxy/$fastcgi is defined, otherwise use directory template.
   if ($proxy != undef) {
     $content_real = template('nginx/vhost/vhost_location_proxy.erb')
+  } elsif ($fastcgi != undef) {
+    $content_real = template('nginx/vhost/vhost_location_fastcgi.erb')
   } elsif ($location_alias != undef) {
     $content_real = template('nginx/vhost/vhost_location_alias.erb')
   } elsif ($stub_status != undef) {
@@ -92,11 +95,17 @@ define nginx::resource::location(
   if ($vhost == undef) {
     fail('Cannot create a location reference without attaching to a virtual host')
   }
-  if (($www_root == undef) and ($proxy == undef) and ($location_alias == undef) and ($stub_status == undef) ) {
-    fail('Cannot create a location reference without a www_root, proxy, location_alias or stub_status defined')
+  if (($www_root == undef) and ($fastcgi == undef) and
+  ($proxy == undef) and ($location_alias == undef) and ($stub_status == undef) ) {
+    fail('Cannot create a location reference without a www_root, proxy. fastcgi, location_alias or stub_status defined')
   }
-  if (($www_root != undef) and ($proxy != undef)) {
-    fail('Cannot define both directory and proxy in a virtual host')
+
+  # http://projects.puppetlabs.com/issues/18942
+  if (($fastcgi != undef)and($proxy != undef)
+  or ($www_root != undef)and($proxy != undef)
+  or ($www_root != undef)and($fastcgi != undef)
+  or ($www_root == undef)and($fastcgi == undef)and($proxy == undef)) {
+    fail('Cannot define more than one (www_root|proxy|fastcgi) at a time in a virtual host')
   }
 
   ## Create stubs for vHost File Fragment Pattern
