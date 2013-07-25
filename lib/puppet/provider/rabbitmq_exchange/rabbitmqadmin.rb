@@ -1,7 +1,14 @@
 require 'puppet'
 Puppet::Type.type(:rabbitmq_exchange).provide(:rabbitmqadmin) do
 
-  commands :rabbitmqadmin => '/usr/local/bin/rabbitmqadmin'
+  if Puppet::PUPPETVERSION.to_f < 3
+    commands :rabbitmqadmin => 'rabbitmqadmin'
+  else
+    has_command(:rabbitmqadmin, 'rabbitmqadmin') do
+      environment :HOME => "/tmp"
+      environment :PATH => "/usr/local/bin"
+    end
+  end
   defaultfor :feature => :posix
 
   def should_vhost
