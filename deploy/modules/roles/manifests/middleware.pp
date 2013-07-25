@@ -32,6 +32,7 @@ class roles::middleware {
     configure_permission => '.*',
     read_permission      => '.*',
     write_permission     => '.*',
+    provider => 'rabbitmqctl',
   } 
   rabbitmq_exchange { 'mcollective_broadcast@/mcollective':
     type     => 'topic',
