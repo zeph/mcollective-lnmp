@@ -1,7 +1,14 @@
 require 'puppet'
 Puppet::Type.type(:rabbitmq_exchange).provide(:rabbitmqadmin) do
 
-  commands :rabbitmqadmin => '/usr/local/bin/rabbitmqadmin'
+  if Puppet::PUPPETVERSION.to_f < 3
+    commands :rabbitmqadmin => 'rabbitmqadmin'
+  else
+    has_command(:rabbitmqadmin, 'rabbitmqadmin') do
+      environment :HOME => "/tmp"
+      environment :PATH => "/usr/local/bin"
+    end
+  end
   defaultfor :feature => :posix
 
   def should_vhost
@@ -46,12 +53,12 @@ Puppet::Type.type(:rabbitmq_exchange).provide(:rabbitmqadmin) do
   def create
     vhost_opt = should_vhost ? "--vhost=#{should_vhost}" : ''
     name = resource[:name].split('@')[0]
-    if not resource[:user].nil? and not resource[:password].nil?
+    if resource[:user] and resource[:password]
     	u_o = "--username=#{resource[:user]}"
     	p_o = "--password=#{resource[:password]}"
-	rabbitmqadmin('declare', 'exchange', u_o, p_o, vhost_opt, "name=#{name}", "type=#{resource[:type]}")
+	    rabbitmqadmin('declare', 'exchange', u_o, p_o, vhost_opt, "name=#{name}", "type=#{resource[:type]}")
     else
-	rabbitmqadmin('declare', 'exchange', vhost_opt, "name=#{name}", "type=#{resource[:type]}")
+	    rabbitmqadmin('declare', 'exchange', vhost_opt, "name=#{name}", "type=#{resource[:type]}")
     end
     @property_hash[:ensure] = :present
   end
@@ -59,12 +66,12 @@ Puppet::Type.type(:rabbitmq_exchange).provide(:rabbitmqadmin) do
   def destroy
     vhost_opt = should_vhost ? "--vhost=#{should_vhost}" : ''
     name = resource[:name].split('@')[0]
-    if not resource[:user].nil? and not resource[:password].nil?
-    	u_o = "--username=#{resource[:user]}"
-    	p_o = "--password=#{resource[:password]}"
-	rabbitmqadmin('delete', 'exchange', u_o, p_o, vhost_opt, "name=#{name}")
+    if resource[:user] and resource[:password]
+      u_o = "--username=#{resource[:user]}"
+      p_o = "--password=#{resource[:password]}"
+	    rabbitmqadmin('delete', 'exchange', u_o, p_o, vhost_opt, "name=#{name}")
     else
-	rabbitmqadmin('delete', 'exchange', vhost_opt, "name=#{name}")
+	    rabbitmqadmin('delete', 'exchange', vhost_opt, "name=#{name}")
     end
     @property_hash[:ensure] = :absent
   end

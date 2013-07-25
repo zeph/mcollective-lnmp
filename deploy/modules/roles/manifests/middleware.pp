@@ -8,7 +8,7 @@ class roles::middleware {
   class{"mcollective": } ->
   Class[$name]
 
-  class{'rabbitmq::server':
+  class{'rabbitmq':
     version      => "3.1.2",
     config_stomp => true,
   } 
