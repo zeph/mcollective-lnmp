@@ -19,14 +19,6 @@ Puppet::Type.type(:rabbitmq_exchange).provide(:rabbitmqadmin) do
     end
   end
 
-  def username
-    @username = resource[:user]
-  end
-
-  def password
-    @password = resource[:password]
-  end
-
   def self.instances
     resources = []
     rabbitmqadmin('list', 'exchanges').split(/\n/)[3..-2].collect do |line|
@@ -61,9 +53,9 @@ Puppet::Type.type(:rabbitmq_exchange).provide(:rabbitmqadmin) do
   def create
     vhost_opt = should_vhost ? "--vhost=#{should_vhost}" : ''
     name = resource[:name].split('@')[0]
-    if @username and @password
-    	u_o = "--username=#{username}"
-    	p_o = "--password=#{password}"
+    if resource[:user] and resource[:password]
+    	u_o = "--username=#{resource[:user]}"
+    	p_o = "--password=#{resource[:password]}"
 	    rabbitmqadmin('declare', 'exchange', u_o, p_o, vhost_opt, "name=#{name}", "type=#{resource[:type]}")
     else
 	    rabbitmqadmin('declare', 'exchange', vhost_opt, "name=#{name}", "type=#{resource[:type]}")
@@ -74,9 +66,9 @@ Puppet::Type.type(:rabbitmq_exchange).provide(:rabbitmqadmin) do
   def destroy
     vhost_opt = should_vhost ? "--vhost=#{should_vhost}" : ''
     name = resource[:name].split('@')[0]
-    if @username and @password
-      u_o = "--username=#{username}"
-      p_o = "--password=#{password}"
+    if resource[:user] and resource[:password]
+      u_o = "--username=#{resource[:user]}"
+      p_o = "--password=#{resource[:password]}"
 	    rabbitmqadmin('delete', 'exchange', u_o, p_o, vhost_opt, "name=#{name}")
     else
 	    rabbitmqadmin('delete', 'exchange', vhost_opt, "name=#{name}")
