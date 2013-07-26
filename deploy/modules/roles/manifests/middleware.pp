@@ -61,7 +61,7 @@ class roles::middleware {
     'mapscript', 'mcrypt', 'memcache', 'memcached', 'midgard2',
     'ming', 'mysqlnd', 'ps', 'radius', 'remctl', 'rrd', 'sasl',
     'suhosin', 'svn', 'sybase', 'tokyo-tyrant', 'uuid', 'xcache',
-    'xdebug',]:
+    'xdebug']:
   }
 
   class { 'nginx': }
@@ -74,15 +74,18 @@ class roles::middleware {
 
   nginx::resource::vhost { 'vagrant.local':
     ensure => present,
-    www_root => '/vagrant',
+    www_root => '/vagrant/shop/bob/public',
   }
 
   include php::fpm::daemon
   php::fpm::conf { 'www':
     listen  => '127.0.0.1:9001',
-    user    => 'www-data',
+    user    => 'vagrant',
+    group   => 'vagrant',
     # For the user to exist
     require => Package['nginx'],
   }
+
+  package { 'mysql-server': ensure => installed }
 
 }
