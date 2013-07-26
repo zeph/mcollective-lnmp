@@ -54,9 +54,9 @@ Puppet::Type.type(:rabbitmq_exchange).provide(:rabbitmqadmin) do
     vhost_opt = should_vhost ? "--vhost=#{should_vhost}" : ''
     name = resource[:name].split('@')[0]
     if resource[:user] and resource[:password]
-    	u_o = "--username=#{resource[:user]}"
-    	p_o = "--password=#{resource[:password]}"
-	    rabbitmqadmin('declare', 'exchange', u_o, p_o, vhost_opt, "name=#{name}", "type=#{resource[:type]}")
+	    rabbitmqadmin('declare', 'exchange',
+                    "--username=#{resource[:user]}", "--password=#{resource[:password]}",
+                    vhost_opt, "name=#{name}", "type=#{resource[:type]}")
     else
 	    rabbitmqadmin('declare', 'exchange', vhost_opt, "name=#{name}", "type=#{resource[:type]}")
     end
@@ -67,9 +67,9 @@ Puppet::Type.type(:rabbitmq_exchange).provide(:rabbitmqadmin) do
     vhost_opt = should_vhost ? "--vhost=#{should_vhost}" : ''
     name = resource[:name].split('@')[0]
     if resource[:user] and resource[:password]
-      u_o = "--username=#{resource[:user]}"
-      p_o = "--password=#{resource[:password]}"
-	    rabbitmqadmin('delete', 'exchange', u_o, p_o, vhost_opt, "name=#{name}")
+      rabbitmqadmin('delete', 'exchange',
+                    "--username=#{resource[:user]}", "--password=#{resource[:password]}",
+                    vhost_opt, "name=#{name}")
     else
 	    rabbitmqadmin('delete', 'exchange', vhost_opt, "name=#{name}")
     end

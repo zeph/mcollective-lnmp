@@ -2,6 +2,6 @@ pkg/
 *.swp
 metadata.json
 spec/fixtures
-.idea
-**.DS_Store
+.rspec_system
 *.lock
+.idea
