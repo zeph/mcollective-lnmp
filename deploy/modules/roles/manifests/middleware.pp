@@ -74,6 +74,7 @@ class roles::middleware {
   nginx::resource::vhost { 'vagrant.local':
     ensure => present,
     www_root => '/vagrant/www/shop/bob/public',
+    # FIXME: fastcgi_param   APPLICATION_ENV dev;
   }
 
   include php::fpm::daemon
