@@ -73,7 +73,7 @@ class roles::middleware {
 
   nginx::resource::vhost { 'vagrant.local':
     ensure => present,
-    www_root => '/vagrant/shop/bob/public',
+    www_root => '/vagrant/www/shop/bob/public',
   }
 
   include php::fpm::daemon
