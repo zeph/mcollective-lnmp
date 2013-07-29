@@ -5,7 +5,7 @@
 #
 ##TEMPLATE="centos-64-x64-vbox4210-nocm"
 ##T_MIRROR="http://puppet-vagrant-boxes.puppetlabs.com/"+TEMPLATE+".box"
-TEMPLATE="precise64-vanilla"
+TEMPLATE="wheezy"
 ##T_MIRROR="https://dl.dropboxusercontent.com/u/165709740/boxes/"+TEMPLATE+".box"
 
 # local override
@@ -36,7 +36,7 @@ Vagrant::Config.run do |config|
     vmconfig.vm.customize ["modifyvm", :id, "--memory", MEMORY, "--cpus", 4]
     vmconfig.vm.box_url = T_MIRROR
 
-    vmconfig.vm.provision :shell, :path => "puppet.sh"
+    #vmconfig.vm.provision :shell, :path => "puppet.sh"
     vmconfig.vm.provision :puppet, :options => ["--pluginsync"], :module_path => "deploy/modules" do |puppet|
       puppet.manifests_path = "deploy"
       puppet.manifest_file = "site.pp"

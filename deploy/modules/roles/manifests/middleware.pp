@@ -52,17 +52,16 @@ class roles::middleware {
     memory_limit   => '256M',
   }
 
+  $packages_php = [
+    'cgi', 'curl', 'gd', 'imagick', 'mcrypt',
+    'memcache', 'memcached', 'mysql', 'pspell', 'recode',
+    # (v5.3.14 specific) 'snmp',
+    'sqlite', 'tidy', 'xmlrpc', 'ldap', 'xsl',
+    # (inherited) 'cli', 'common', 'fpm',
+  ]
+
   include php::cli
-  php::module {[
-    'curl', 'dbg', 'gd', 'gmp', 'ldap', 'mysql', 'odbc', 'pgsql',
-    'pspell', 'recode', 'snmp', 'sqlite', 'tidy', 'xmlrpc', 'xsl',
-    'adodb', 'auth-pam', 'enchant', 'exactimage', 'ffmpeg', 'geoip',
-    'imagick', 'imap', 'interbase', 'intl', 'lasso', 'librdf',
-    'mapscript', 'mcrypt', 'memcache', 'memcached', 'midgard2',
-    'ming', 'mysqlnd', 'ps', 'radius', 'remctl', 'rrd', 'sasl',
-    'suhosin', 'svn', 'sybase', 'tokyo-tyrant', 'uuid', 'xcache',
-    'xdebug']:
-  }
+  php::module {$packages_php: }
 
   class { 'nginx': }
 
